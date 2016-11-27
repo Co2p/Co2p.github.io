@@ -13,8 +13,17 @@
     <!--set page color and scaling fix-->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" name="viewport"><!--scaling-->
   </head>
-  <body id="ide" class="orange waves-effect waves-light" style="margin:0 auto; padding:0; height:100%; width:100%; position: absolute;">
-    <div style="height:100%;width:100%;overflow:hidden;">
+  <body style="margin:0; padding:0; height:100%; width:100%; position: absolute;">
+    <div class="row">
+      <div class="input-field col s6">
+        <input id="ip" type="text" class="validate">
+        <label for="ip">Hattens IP</label>
+      </div>
+      <div class="col s6">
+        <button class="btn" id="set-ip">SET</button>
+      </div>
+    </div>
+    <div id="ide" class="orange waves-effect waves-light" style="height:100%;width:100%;overflow:hidden;">
       <div class="valign">
         <div class="center-align">
           <i class="material-icons white-text" style="width: 100%;margin-top:15%;font-size: 100px;">lightbulb_outline</i>
@@ -24,8 +33,16 @@
     <audio id="audio" src="ide2.wav" type="audio/wav"></audio>
 
     <script>
+      var ip;
+
+      $('#set-ip').click(() => {
+        ip = $('#ip').val();
+        console.log(ip);
+      })
+
       $('#ide').click(() => {
-        httpGet('http://192.168.1.13:3000');
+        console.log(ip);
+        httpGet(ip);
         var playPromise = document.querySelector('audio').play();
 
         // In browsers that don’t yet support this functionality,
