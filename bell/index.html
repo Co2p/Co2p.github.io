@@ -1,76 +1,85 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Hatt</title>
-    <link rel="shortcut icon" href="favicon.png" />
+<head>
+  <title>Hatt</title>
+  <!--Material design goodies:-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+  <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <!--Material design goodies:-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
-    <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <!--set page color and scaling fix-->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" name="viewport"><!--scaling-->
-  </head>
-  <body style="margin:0; padding:0; height:100%; width:100%; position: absolute;">
-    <div class="row">
-      <div class="input-field col s6">
-        <input id="ip" type="text" class="validate">
-        <label for="ip">Hattens IP</label>
-      </div>
-      <div class="col s6">
-        <button class="btn" id="set-ip">SET</button>
+  <!--set page color and scaling fix-->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" name="viewport"><!--scaling-->
+</head>
+<body style="padding:0; height:100%; width:100%; position: absolute;">
+  <div id="ide" class="orange waves-effect waves-light" style="height:100%;width:100%;overflow:hidden;">
+    <div class="valign">
+      <div class="center-align">
+        <i class="material-icons white-text" style="width: 100%;margin-top:15%;font-size: 100px;">lightbulb_outline</i>
       </div>
     </div>
-    <div id="ide" class="orange waves-effect waves-light" style="height:100%;width:100%;overflow:hidden;">
-      <div class="valign">
-        <div class="center-align">
-          <i class="material-icons white-text" style="width: 100%;margin-top:15%;font-size: 100px;">lightbulb_outline</i>
-        </div>
-      </div>
+  </div>
+  <div style="margin:24px 0 0 0;" class="row">
+    <div class="input-field col s10">
+      <input id="ip" type="text" class="validate">
+      <label for="ip">Hattens IP</label>
     </div>
-    <audio id="audio" src="ide2.wav" type="audio/wav"></audio>
+    <div class="col s2">
+      <button class="btn btn-large" id="set-ip">SET</button>
+    </div>
+  </div>
 
-    <script>
-      var ip;
+  <audio id="audio" src="ide2.wav" type="audio/wav"></audio>
 
-      $('#set-ip').click(() => {
-        ip = $('#ip').val();
-        console.log(ip);
-      })
+  <script>
+  var ip = 'http://192.168.43.96';
+  $('#ip').val(ip)
 
-      $('#ide').click(() => {
-        console.log(ip);
-        httpGet(ip);
-        var playPromise = document.querySelector('audio').play();
+  $('#set-ip').click(() => {
+    ip = $('#ip').val();
+    console.log(ip);
+  })
 
-        // In browsers that don’t yet support this functionality,
-        // playPromise won’t be defined.
-        if (playPromise !== undefined) {
-          playPromise.then(function() {
-            // Automatic playback started!
-            console.log('play');
-          }).catch(function(error) {
-            // Automatic playback failed.
-            // Show a UI element to let the user manually start playback.
-            console.log(error);
-          });
-        }
+  $('body').keypress(function( event ) {
+    ide();
+  });
 
-      })
+  $('#ide').click(() => {
+    ide();
+  })
 
-      function httpGet(theUrl){
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function() {
-            //if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
-                //callback(xmlHttp.responseText);
-            //}
-        }
-        xmlHttp.open("GET", theUrl, true); // true for asynchronous
-        xmlHttp.send(null);
-      }
+  function ide() {
+    var playPromise = document.querySelector('audio').play();
+    // In browsers that don’t yet support this functionality,
+    // playPromise won’t be defined.
+    if (playPromise !== undefined) {
+      playPromise.then(function() {
+        // Automatic playback started!
+      }).catch(function(error) {
+        // Automatic playback failed.
+        // Show a UI element to let the user manually start playback.
+        console.log(error);
+      });
+    }
 
-    </script>
-  </body>
+    httpGet(ip + '/on');
+    window.setTimeout(function(){
+      httpGet(ip + '/off');
+    }, 2000);
+  }
+
+  function httpGet(theUrl){
+    console.log(theUrl);
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+      //if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+      //callback(xmlHttp.responseText);
+      //}
+    }
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous
+    xmlHttp.send(null);
+  }
+
+  </script>
+</body>
 </html>
