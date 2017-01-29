@@ -63,9 +63,9 @@ function httpGet(theUrl){
   console.log(theUrl);
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() {
-    //if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
-    //callback(xmlHttp.responseText);
-    //}
+    if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+      console.log(xmlHttp.responseText);
+    }
   }
   xmlHttp.open("GET", theUrl, true); // true for asynchronous
   xmlHttp.send(null);
