@@ -1,0 +1,50 @@
+.white {
+  background: #ffffff;
+}
+
+.light_grey {
+  background: #7d7d7d;
+}
+
+.dark_grey {
+  background: #212121;
+  color: #ffffff;
+}
+
+.black {
+  background: #0e0000;
+  color: #ffffff;
+}
+
+.red {
+  background: #c70220;
+}
+
+.blue {
+  background: #3db9fd;
+}
+
+.green {
+  background: #409817;
+}
+
+.orange {
+  background: #e28100;
+}
+
+/*Droplet yellow*/
+.yellow {
+  background: #fdbf54;
+}
+
+.purple {
+  background: #512394;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.text-blue {
+  color: #2784c7;
+}
